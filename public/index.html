@@ -126,8 +126,6 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 </style>
 </head>
 <body>
-</head>
-<body>
 <header>
   <div class="logo">&#9889; SPRITE TRACKER</div>
   <div class="subtitle">Fortnite Emoticon Collection</div>
@@ -242,7 +240,53 @@ var allData = {};
 var curPlayer = PLAYERS[0];
 var curVF = 0;
 
-renderPTabs(); renderMy(); updateStats(); }
+function k(id, i) { return id + '_' + i; }
+
+function pd(player) {
+  if (!allData[player]) allData[player] = {};
+  return allData[player];
+}
+
+function owned(player, id, i) {
+  return !!(pd(player)[k(id, i)]);
+}
+
+function switchP(name) {
+  curPlayer = name;
+  renderPTabs();
+  renderMy();
+  updateStats();
+}
+
+function renderPTabs() {
+  var h = '';
+  PLAYERS.forEach(function(p) {
+    h += '<button class="ptab' + (p === curPlayer ? ' active' : '') + '" onclick="switchP(\'' + p + '\')">' + p + '</button>';
+  });
+  document.getElementById('ptabs').innerHTML = h;
+}
+
+function showPage(name) {
+  ['my','overview','info'].forEach(function(pg) {
+    document.getElementById('page-' + pg).classList.toggle('active', pg === name);
+    document.getElementById('tab-' + pg).classList.toggle('active', pg === name);
+  });
+  if (name === 'info') renderInfo();
+  if (name === 'overview') renderOv();
+}
+
+function updateStats() {
+  var total = 0, got = 0;
+  SPRITES.forEach(function(s) {
+    s.v.forEach(function(a, i) {
+      if (a) { total++; if (owned(curPlayer, s.id, i)) got++; }
+    });
+  });
+  document.getElementById('so').textContent = got;
+  document.getElementById('st').textContent = total;
+  document.getElementById('sp').textContent = total > 0 ? (got / total * 100).toFixed(0) + '%' : '0%';
+  document.getElementById('pf').style.width = (total > 0 ? got / total * 100 : 0).toFixed(1) + '%';
+}
 
 function renderMy(){
   var h='<div class="twrap"><table>';
@@ -397,7 +441,7 @@ async function loadData() {
     var res = await fetch(API);
     allData = await res.json();
   } catch(e) {
-    showToast('Could not connect to database');
+    toast('Could not connect to database');
   }
 }
 
@@ -409,7 +453,7 @@ async function saveToggle(player, spriteId, vi, owned) {
       body: JSON.stringify({player: player, spriteId: spriteId, variantIdx: vi, owned: owned})
     });
   } catch(e) {
-    showToast('Save failed - check connection');
+    toast('Save failed - check connection');
   }
 }
 
