@@ -82,6 +82,18 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 .rl{background:rgba(245,158,11,.15);color:var(--legendary);border:1px solid rgba(245,158,11,.4)}
 .rm{background:rgba(239,68,68,.15);color:var(--mythic);border:1px solid rgba(239,68,68,.4)}
 .ovhdr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px 16px 6px}
+.lboard{padding:12px 14px 4px}
+.lboard-title{font-family:'Bangers',cursive;font-size:1rem;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+.lrow{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:9px 12px;margin-bottom:6px}
+.lrow.lme{border-color:var(--accent);background:rgba(233,69,96,.08)}
+.lrank{font-family:'Bangers',cursive;font-size:1.3rem;width:24px;text-align:center;flex-shrink:0}
+.lrank.r1{color:var(--gold)}.lrank.r2{color:#aaa}.lrank.r3{color:#cd7f32}
+.lname{font-weight:800;font-size:.9rem;flex:1}
+.lbars{display:flex;flex-direction:column;gap:3px;flex:2}
+.lbar-wrap{display:flex;align-items:center;gap:6px;font-size:.65rem;font-weight:700}
+.lbar-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.lbar-fill{height:100%;border-radius:4px;transition:width .4s}
+.lstat{font-size:.7rem;font-weight:900;text-align:right;min-width:32px}
 .vfbtn{background:rgba(255,255,255,.06);border:2px solid transparent;color:var(--muted);border-radius:16px;padding:4px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent}
 .vfbtn.ab{border-color:var(--base);background:rgba(100,181,246,.15);color:var(--text)}
 .vfbtn.ag{border-color:var(--gold);background:rgba(245,200,66,.15);color:var(--text)}
@@ -145,7 +157,7 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 <body>
 <header>
   <div class="logo">&#9889; SPRITE TRACKER</div>
-  <div class="subtitle">Fortnite Emoticon Collection</div>
+  <div class="subtitle">Fortnite</div>
   <div class="stats-bar" id="sbar">
     <div class="stat">Owned: <span id="so">0</span></div>
     <div class="stat">&#11088; Mastered: <span id="sm">0</span></div>
@@ -183,6 +195,7 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
     <button class="vfbtn" id="vf2" onclick="setVF(2)">Gummy</button>
     <button class="vfbtn" id="vf3" onclick="setVF(3)">Galaxy</button>
   </div>
+  <div id="lb-content"></div>
   <div id="ov-content"></div>
 </div>
 
@@ -296,7 +309,7 @@ function showPage(name) {
     document.getElementById('tab-' + pg).classList.toggle('active', pg === name);
   });
   if (name === 'info') renderInfo();
-  if (name === 'overview') renderOv();
+  if (name === 'overview') { renderLeaderboard(); renderOv(); }
 }
 
 function updateStats() {
@@ -353,6 +366,47 @@ function renderMy(){
   });
   h+="</tbody></table></div>";
   document.getElementById("my-content").innerHTML=h;
+}
+
+function renderLeaderboard() {
+  var total = 0;
+  SPRITES.forEach(function(s){ s.v.forEach(function(a){ if(a) total++; }); });
+
+  var rows = PLAYERS.map(function(p) {
+    var got = 0, mastered = 0;
+    SPRITES.forEach(function(s){
+      s.v.forEach(function(a,i){
+        if(!a) return;
+        var lv = ownedLevel(p,s.id,i);
+        if(lv>=1) got++;
+        if(lv===2) mastered++;
+      });
+    });
+    return {name:p, got:got, mastered:mastered, pct: total>0 ? got/total : 0};
+  });
+
+  rows.sort(function(a,b){ return b.mastered-a.mastered || b.got-a.got; });
+
+  var medals = ['r1','r2','r3'];
+  var rankSyms = ['🥇','🥈','🥉'];
+  var h = '<div class="lboard"><div class="lboard-title">&#9889; Leaderboard</div>';
+  rows.forEach(function(r, idx) {
+    var rankCls = medals[idx] || '';
+    var rankSym = rankSyms[idx] || (idx+1);
+    var isMe = r.name === curPlayer;
+    var pctW = (r.pct*100).toFixed(0);
+    h += '<div class="lrow'+(isMe?' lme':'')+'">';
+    h += '<div class="lrank '+rankCls+'">'+rankSym+'</div>';
+    h += '<div class="lname">'+r.name+'</div>';
+    h += '<div class="lbars">';
+    h += '<div class="lbar-wrap"><span style="color:var(--green)">'+r.got+' owned</span><div class="lbar-track"><div class="lbar-fill" style="width:'+pctW+'%;background:var(--green)"></div></div></div>';
+    h += '<div class="lbar-wrap"><span style="color:var(--gold)">'+r.mastered+' mastered</span><div class="lbar-track"><div class="lbar-fill" style="width:'+(total>0?(r.mastered/total*100).toFixed(0):0)+'%;background:var(--gold)"></div></div></div>';
+    h += '</div>';
+    h += '<div class="lstat" style="color:var(--muted)">'+pctW+'%</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  document.getElementById('lb-content').innerHTML = h;
 }
 
 function setVF(vi){
