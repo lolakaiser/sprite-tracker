@@ -375,6 +375,7 @@ function showPage(name) {
     document.getElementById('tab-' + pg).classList.toggle('active', pg === name);
   });
   localStorage.setItem('page', name);
+  if (name === 'my') renderMy();
   if (name === 'info') renderInfo();
   if (name === 'overview') renderOv();
   if (name === 'leaderboard') renderLeaderboard();
