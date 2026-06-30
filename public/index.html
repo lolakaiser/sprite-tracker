@@ -152,12 +152,38 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
   .sname{font-size:.75rem}
   .rb{font-size:.55rem}
 }
+/* home screen */
+.home-screen{position:fixed;inset:0;background:var(--bg);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;padding-top:calc(28px + env(safe-area-inset-top));padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+.home-logo{font-family:'Bangers',cursive;font-size:2.6rem;letter-spacing:6px;background:linear-gradient(90deg,#64b5f6,#ff79c6,#f5c842,#9b59b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.home-sub{font-size:.7rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:32px}
+.home-prompt{font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:3px;color:var(--text);margin-bottom:16px;text-align:center}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:420px}
+.pcard{background:var(--card);border:2px solid transparent;border-radius:20px;padding:20px 12px;text-align:center;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent}
+.pcard:active{transform:scale(.96)}
+.pcard-name{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:6px}
+.pcard-stats{font-size:.72rem;color:var(--muted);font-weight:700;margin-bottom:8px}
+.pcard-bar{height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.pcard-fill{height:100%;border-radius:4px;transition:width .4s}
+.home-loading{font-size:.8rem;color:var(--muted);margin-top:12px}
+/* header player chip */
+.player-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(233,69,96,.12);border:1.5px solid var(--accent);border-radius:20px;padding:3px 12px 3px 10px;font-size:.78rem;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;margin-top:6px}
+.player-chip span{color:var(--accent)}
 </style>
 </head>
 <body>
+
+<!-- Home screen -->
+<div class="home-screen" id="home-screen">
+  <div class="home-logo">&#9889; SPRITE TRACKER</div>
+  <div class="home-sub">Fortnite</div>
+  <div class="home-prompt">Who are you?</div>
+  <div class="home-grid" id="home-grid"></div>
+  <div class="home-loading" id="home-loading">Loading data...</div>
+</div>
+
 <header>
   <div class="logo">&#9889; SPRITE TRACKER</div>
-  <div class="subtitle">Fortnite</div>
+  <div onclick="goHome()" class="player-chip">&#128100; <span id="cur-player-name">—</span> &rsaquo;</div>
   <div class="stats-bar" id="sbar">
     <div class="stat">Owned: <span id="so">0</span></div>
     <div class="stat">&#11088; Mastered: <span id="sm">0</span></div>
@@ -292,9 +318,44 @@ function ownedLevel(player, id, i) {
 function owned(player, id, i) { return ownedLevel(player, id, i) >= 1; }
 function isMastered(player, id, i) { return ownedLevel(player, id, i) === 2; }
 
+var PLAYER_COLORS = ['var(--base)','var(--gold)','var(--gummy)','var(--galaxy)','var(--accent)','var(--green)'];
+
+function renderHome() {
+  var total = 0;
+  SPRITES.forEach(function(s){ s.v.forEach(function(a){ if(a) total++; }); });
+  var h = '';
+  PLAYERS.forEach(function(p, idx) {
+    var got = 0, mastered = 0;
+    SPRITES.forEach(function(s){ s.v.forEach(function(a,i){ if(!a)return; var lv=ownedLevel(p,s.id,i); if(lv>=1)got++; if(lv===2)mastered++; }); });
+    var col = PLAYER_COLORS[idx % PLAYER_COLORS.length];
+    var pct = total > 0 ? (got/total*100).toFixed(0) : 0;
+    h += '<div class="pcard" style="border-color:'+col+'" onclick="enterApp(\''+p+'\')"><div class="pcard-name" style="color:'+col+'">'+p+'</div>';
+    h += '<div class="pcard-stats">'+got+' owned &middot; '+mastered+' &#11088;</div>';
+    h += '<div class="pcard-bar"><div class="pcard-fill" style="width:'+pct+'%;background:'+col+'"></div></div></div>';
+  });
+  document.getElementById('home-grid').innerHTML = h;
+  document.getElementById('home-loading').style.display = 'none';
+}
+
+function enterApp(name) {
+  curPlayer = name;
+  localStorage.setItem('player', name);
+  document.getElementById('home-screen').style.display = 'none';
+  document.getElementById('cur-player-name').textContent = name;
+  renderPTabs();
+  showPage(localStorage.getItem('page') || 'my');
+  updateStats();
+}
+
+function goHome() {
+  renderHome();
+  document.getElementById('home-screen').style.display = 'flex';
+}
+
 function switchP(name) {
   curPlayer = name;
   localStorage.setItem('player', name);
+  document.getElementById('cur-player-name').textContent = name;
   renderPTabs();
   renderMy();
   updateStats();
@@ -595,13 +656,8 @@ async function saveAll(){
 }
 
 (async function(){
-  var savedPlayer = localStorage.getItem('player');
-  if (savedPlayer && PLAYERS.indexOf(savedPlayer) !== -1) curPlayer = savedPlayer;
   await loadData();
-  renderPTabs();
-  var savedPage = localStorage.getItem('page') || 'my';
-  showPage(savedPage);
-  updateStats();
+  renderHome();
 })();
 
 </script>
