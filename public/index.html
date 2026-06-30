@@ -33,6 +33,9 @@ header{background:linear-gradient(135deg,#0a0a1f,#1a0a2e,#0a1a2f);padding:16px 2
 .btn{border:none;border-radius:16px;padding:6px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent}
 .btn-p{background:var(--accent);color:#fff}
 .btn-o{background:transparent;border:2px solid rgba(255,255,255,.2);color:var(--muted)}
+.btn-save{background:#2ecc71;color:#fff}
+.btn-save.dirty{animation:pulse-save 1.5s infinite}
+@keyframes pulse-save{0%,100%{box-shadow:0 0 0 0 rgba(46,204,113,.5)}50%{box-shadow:0 0 0 6px rgba(46,204,113,0)}}
 .legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;padding:4px 16px 12px;font-size:.72rem;font-weight:700;color:var(--muted)}
 .ldot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px}
 .twrap{overflow-x:auto;padding:0 10px 20px;-webkit-overflow-scrolling:touch}
@@ -148,6 +151,7 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
   <div class="toolbar">
     <button class="btn btn-p" onclick="checkAll()">&#10003; Check All</button>
     <button class="btn btn-o" onclick="uncheckAll()">&#10007; Uncheck All</button>
+    <button class="btn btn-save" id="save-btn" onclick="saveAll()">&#128190; Save</button>
   </div>
   <div class="legend">
     <span><span class="ldot" style="background:var(--base)"></span>Base</span>
@@ -457,27 +461,47 @@ async function saveToggle(player, spriteId, vi, owned) {
   }
 }
 
-async function toggle(id, i) {
-  var v = !owned(curPlayer,id,i);
-  pd(curPlayer)[k(id,i)] = v;
-  renderMy(); renderOv(); updateStats();
-  await saveToggle(curPlayer, id, i, v);
+function markDirty() {
+  document.getElementById('save-btn').classList.add('dirty');
 }
 
-async function checkAll(){
-  var ps = [];
-  SPRITES.forEach(function(s){ s.v.forEach(function(a,i){ if(a && !owned(curPlayer,s.id,i)){ pd(curPlayer)[k(s.id,i)]=1; ps.push(saveToggle(curPlayer,s.id,i,true)); } }); });
+function toggle(id, i) {
+  pd(curPlayer)[k(id,i)] = !owned(curPlayer,id,i);
   renderMy(); renderOv(); updateStats();
-  await Promise.all(ps); toast('All checked!');
+  markDirty();
 }
 
-async function uncheckAll(){
+function checkAll(){
+  SPRITES.forEach(function(s){ s.v.forEach(function(a,i){ if(a) pd(curPlayer)[k(s.id,i)]=1; }); });
+  renderMy(); renderOv(); updateStats();
+  markDirty(); toast('All checked — hit Save to keep!');
+}
+
+function uncheckAll(){
   if(!confirm('Uncheck everything for '+curPlayer+'?')) return;
-  var ps = [];
-  SPRITES.forEach(function(s){ s.v.forEach(function(a,i){ if(a && owned(curPlayer,s.id,i)){ pd(curPlayer)[k(s.id,i)]=false; ps.push(saveToggle(curPlayer,s.id,i,false)); } }); });
   allData[curPlayer]={};
   renderMy(); renderOv(); updateStats();
-  await Promise.all(ps); toast('All cleared');
+  markDirty(); toast('All cleared — hit Save to keep!');
+}
+
+async function saveAll(){
+  var btn = document.getElementById('save-btn');
+  btn.textContent = '...'; btn.disabled = true;
+  var ps = [];
+  SPRITES.forEach(function(s){
+    s.v.forEach(function(a,i){
+      if(!a) return;
+      ps.push(saveToggle(curPlayer, s.id, i, !!owned(curPlayer,s.id,i)));
+    });
+  });
+  try {
+    await Promise.all(ps);
+    btn.classList.remove('dirty');
+    toast('Saved to MongoDB!');
+  } catch(e) {
+    toast('Save failed — check connection');
+  }
+  btn.textContent = '💾 Save'; btn.disabled = false;
 }
 
 (async function(){
