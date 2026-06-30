@@ -294,6 +294,7 @@ function isMastered(player, id, i) { return ownedLevel(player, id, i) === 2; }
 
 function switchP(name) {
   curPlayer = name;
+  localStorage.setItem('player', name);
   renderPTabs();
   renderMy();
   updateStats();
@@ -312,6 +313,7 @@ function showPage(name) {
     document.getElementById('page-' + pg).classList.toggle('active', pg === name);
     document.getElementById('tab-' + pg).classList.toggle('active', pg === name);
   });
+  localStorage.setItem('page', name);
   if (name === 'info') renderInfo();
   if (name === 'overview') renderOv();
   if (name === 'leaderboard') renderLeaderboard();
@@ -579,7 +581,7 @@ async function saveAll(){
   SPRITES.forEach(function(s){
     s.v.forEach(function(a,i){
       if(!a) return;
-      ps.push(saveToggle(curPlayer, s.id, i, !!owned(curPlayer,s.id,i)));
+      ps.push(saveToggle(curPlayer, s.id, i, ownedLevel(curPlayer,s.id,i)));
     });
   });
   try {
@@ -593,9 +595,12 @@ async function saveAll(){
 }
 
 (async function(){
+  var savedPlayer = localStorage.getItem('player');
+  if (savedPlayer && PLAYERS.indexOf(savedPlayer) !== -1) curPlayer = savedPlayer;
   await loadData();
   renderPTabs();
-  renderMy();
+  var savedPage = localStorage.getItem('page') || 'my';
+  showPage(savedPage);
   updateStats();
 })();
 
