@@ -299,6 +299,12 @@ var VINFO = [
 
 var VCLS  = ["ob","og","ou","ox","oh"];
 var VKEYS = ["base","gold","gummy","galaxy","holo"];
+var HOLO_IMGS = {
+  water:   "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Water_Holofoil_ui_L.webp",
+  fire:    "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Holofoil_ui_L.webp",
+  king:    "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_King_Holofoil_ui_L.webp",
+  striker: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Soccer_Holofoil_L.webp",
+};
 var RCLS  = {rare:"rr",epic:"re",legendary:"rl",mythic:"rm"};
 var RDOT  = {rare:"#4a90e2",epic:"#a855f7",legendary:"#f59e0b",mythic:"#ef4444"};
 var RLBL  = {rare:"Rare",epic:"Epic",legendary:"Legendary",mythic:"Mythic"};
@@ -434,7 +440,7 @@ function renderMy(){
       var vc=lv>0?VCLS[i]:"";
       var mc=lv===2?" mastered":"";
       var icon=lv===2?"&#11088;":lv===1?"&#10003;":"";
-      var src=IMGS[s.id]?IMGS[s.id][i]:null;
+      var src=i===4?(HOLO_IMGS[s.id]||null):(IMGS[s.id]?IMGS[s.id][i]:null);
       var imgInner=src?'<img src="'+src+'" alt="" onerror="this.style.display=\'none\'">':'';
       h+='<td><button class="cbtn '+(lv>0?"owned ":"")+vc+mc+'" onclick="toggle(\''+s.id+'\','+i+')">'+imgInner+'<div class="check-overlay">'+icon+'</div></button></td>';
     });
@@ -508,7 +514,7 @@ function renderOv(){
   vis.forEach(function(s){
     var haves=PLAYERS.filter(function(p){return owned(p,s.id,vi);});
     var needs=PLAYERS.filter(function(p){return !owned(p,s.id,vi);});
-    var src=IMGS[s.id]?IMGS[s.id][vi]:null;
+    var src=vi===4?(HOLO_IMGS[s.id]||null):(IMGS[s.id]?IMGS[s.id][vi]:null);
     var img=src?'<img src="'+src+'" style="width:28px;height:28px;object-fit:contain;margin-right:6px;vertical-align:middle" alt="" onerror="this.style.display=\'none\'">':'';
     h+='<tr><td><div class="slabel">'+img+'<span style="font-weight:800;font-size:.82rem">'+s.name+'</span></div></td>';
     PLAYERS.forEach(function(p){
