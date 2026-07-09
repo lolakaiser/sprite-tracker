@@ -273,20 +273,20 @@ var IMGS = {
 var SPRITES = [
   {id:"water",      name:"Water",       r:"rare",      v:[1,1,1,1,1], fx:"Restores shields while you are in water, and also affects nearby teammates."},
   {id:"fire",       name:"Fire",        r:"rare",      v:[1,1,1,1,1], fx:"Creates a fiery explosion after you have dealt enough damage to enemies."},
-  {id:"earth",      name:"Earth",       r:"rare",      v:[1,1,1,1,1], fx:"Gives a chance to find extra rare loot when opening chests."},
-  {id:"duck",       name:"Duck",        r:"epic",      v:[1,1,1,1,1], fx:"Dancing or using Jam Tracks restores shields."},
+  {id:"earth",      name:"Earth",       r:"rare",      v:[1,1,1,1,0], fx:"Gives a chance to find extra rare loot when opening chests."},
+  {id:"duck",       name:"Duck",        r:"epic",      v:[1,1,1,1,0], fx:"Dancing or using Jam Tracks restores shields."},
   {id:"ghost",      name:"Ghost",       r:"epic",      v:[1,1,1,1,1], fx:"Reloading your weapon grants temporary invisibility (cloak)."},
-  {id:"demon",      name:"Demon",       r:"epic",      v:[1,1,1,1,1], fx:"Eliminations restore some health and shields (Siphon effect)."},
+  {id:"demon",      name:"Demon",       r:"epic",      v:[1,1,1,1,0], fx:"Eliminations restore some health and shields (Siphon effect)."},
   {id:"king",       name:"King",        r:"epic",      v:[1,1,1,1,1], fx:"Increases your Pickaxe damage."},
-  {id:"dream",      name:"Dream",       r:"legendary", v:[1,1,1,1,1], fx:"Gives random loot each level. At max level it explodes into Legendary loot, then resets."},
-  {id:"punk",       name:"Punk",        r:"legendary", v:[1,1,1,1,1], fx:"No effect until Level 5, then grants unlimited ammo."},
-  {id:"zeropoint",  name:"Zero Point",  r:"mythic",    v:[1,1,1,1,1], fx:"Using a healing item creates a Shield Bubble Jr. around you."},
+  {id:"dream",      name:"Dream",       r:"legendary", v:[1,1,1,1,0], fx:"Gives random loot each level. At max level it explodes into Legendary loot, then resets."},
+  {id:"punk",       name:"Punk",        r:"legendary", v:[1,1,1,1,0], fx:"No effect until Level 5, then grants unlimited ammo."},
+  {id:"zeropoint",  name:"Zero Point",  r:"mythic",    v:[1,1,1,1,0], fx:"Using a healing item creates a Shield Bubble Jr. around you."},
   {id:"burntpeanut",name:"Burnt Peanut",r:"mythic",    v:[1,0,0,0,0], fx:"Small chance for bonus elimination loot, including Mythic items. Base only - no variants."},
   {id:"striker",    name:"Striker",     r:"epic",      v:[1,1,1,1,1], fx:"Gain an Overdrive speed boost after mantling, hurdling, or wall scrambling."},
-  {id:"fishy",      name:"Fishy",       r:"rare",      v:[1,1,1,1,1], fx:"Swim speed way up, plus a brief movement speed boost when you take damage."},
-  {id:"aura",       name:"Aura",        r:"epic",      v:[1,1,1,1,1], fx:"Earn a Shock Rock charge after dealing enough damage."},
-  {id:"boss",       name:"Boss",        r:"legendary", v:[1,1,1,1,1], fx:"Increases your maximum Health and Shield."},
-  {id:"grimreaper", name:"Grim Reaper", r:"mythic",    v:[1,1,1,1,1], fx:"Enemies who damage you become marked, revealing them to you."}
+  {id:"fishy",      name:"Fishy",       r:"rare",      v:[1,1,1,1,0], fx:"Swim speed way up, plus a brief movement speed boost when you take damage."},
+  {id:"aura",       name:"Aura",        r:"epic",      v:[1,1,1,1,0], fx:"Earn a Shock Rock charge after dealing enough damage."},
+  {id:"boss",       name:"Boss",        r:"legendary", v:[1,1,1,1,0], fx:"Increases your maximum Health and Shield."},
+  {id:"grimreaper", name:"Grim Reaper", r:"mythic",    v:[1,1,1,1,0], fx:"Enemies who damage you become marked, revealing them to you."}
 ];
 
 var VINFO = [
@@ -302,6 +302,7 @@ var VKEYS = ["base","gold","gummy","galaxy","holo"];
 var HOLO_IMGS = {
   water:   "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Water_Holofoil_ui_L.webp",
   fire:    "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Holofoil_ui_L.webp",
+  ghost:   "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Ghost_Holo_L.webp",
   king:    "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_King_Holofoil_ui_L.webp",
   striker: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Soccer_Holofoil_L.webp",
 };
