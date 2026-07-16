@@ -111,6 +111,7 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 .icard:active{transform:scale(.97)}
 .icard img{width:64px;height:64px;object-fit:contain;margin-bottom:5px}
 .iname{font-weight:800;font-size:.82rem;margin-bottom:4px}
+.icost{font-size:.62rem;font-weight:700;color:var(--muted);margin-top:4px;opacity:.75}
 .ieff{font-size:.65rem;color:var(--muted);line-height:1.35;margin-top:4px}
 .itap{font-size:.6rem;color:rgba(255,255,255,.2);margin-top:6px;font-style:italic}
 .rghdr{display:flex;align-items:center;gap:10px;padding:12px 14px 8px;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:2px}
@@ -302,25 +303,35 @@ var IMGS = {
   aura:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Drifter_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Drifter_Gold_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Drifter_Candy_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Drifter_Galaxy_ui_L.webp"],
   boss:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_Gold_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_Candy_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_Galaxy_ui_L.webp"],
   grimreaper:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Default_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Gold_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Candy_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Galaxy_L.webp"],
+  air:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Air_Default_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Air_Gold_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Air_Candy_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Air_Galaxy_L.webp"],
+  batman:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Default_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Gold_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Candy_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Galaxy_L.webp"],
+  seven:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Seven_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Seven_Gold_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Seven_Candy_ui_L.webp","https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Seven_Galaxy_ui_L.webp"],
+  polo:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CompanyStargazer_Default_L.webp",null,null,null],
+  vinijr:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CokeParmesan_Default_L.webp",null,null,null],
 };
 
 var SPRITES = [
-  {id:"water",      name:"Water",       r:"rare",      v:[1,1,1,1,1], fx:"Restores shields while you are in water, and also affects nearby teammates."},
-  {id:"fire",       name:"Fire",        r:"rare",      v:[1,1,1,1,1], fx:"Creates a fiery explosion after you have dealt enough damage to enemies."},
-  {id:"earth",      name:"Earth",       r:"rare",      v:[1,1,1,1,0], fx:"Gives a chance to find extra rare loot when opening chests."},
-  {id:"duck",       name:"Duck",        r:"epic",      v:[1,1,1,1,0], fx:"Dancing or using Jam Tracks restores shields."},
-  {id:"ghost",      name:"Ghost",       r:"epic",      v:[1,1,1,1,1], fx:"Reloading your weapon grants temporary invisibility (cloak)."},
-  {id:"demon",      name:"Demon",       r:"epic",      v:[1,1,1,1,0], fx:"Eliminations restore some health and shields (Siphon effect)."},
-  {id:"king",       name:"King",        r:"epic",      v:[1,1,1,1,1], fx:"Increases your Pickaxe damage."},
-  {id:"dream",      name:"Dream",       r:"legendary", v:[1,1,1,1,0], fx:"Gives random loot each level. At max level it explodes into Legendary loot, then resets."},
-  {id:"punk",       name:"Punk",        r:"legendary", v:[1,1,1,1,0], fx:"No effect until Level 5, then grants unlimited ammo."},
-  {id:"zeropoint",  name:"Zero Point",  r:"mythic",    v:[1,1,1,1,0], fx:"Using a healing item creates a Shield Bubble Jr. around you."},
-  {id:"burntpeanut",name:"Burnt Peanut",r:"mythic",    v:[1,0,0,0,0], fx:"Small chance for bonus elimination loot, including Mythic items. Base only - no variants."},
-  {id:"striker",    name:"Striker",     r:"epic",      v:[1,1,1,1,1], fx:"Gain an Overdrive speed boost after mantling, hurdling, or wall scrambling."},
-  {id:"fishy",      name:"Fishy",       r:"rare",      v:[1,1,1,1,0], fx:"Swim speed way up, plus a brief movement speed boost when you take damage."},
-  {id:"aura",       name:"Aura",        r:"epic",      v:[1,1,1,1,0], fx:"Earn a Shock Rock charge after dealing enough damage."},
-  {id:"boss",       name:"Boss",        r:"legendary", v:[1,1,1,1,0], fx:"Increases your maximum Health and Shield."},
-  {id:"grimreaper", name:"Grim Reaper", r:"mythic",    v:[1,1,1,1,0], fx:"Enemies who damage you become marked, revealing them to you."}
+  {id:"water",      name:"Water",       r:"rare",      v:[1,1,1,1,1], loc:"Lakes, rivers, coastlines",                                        fx:"Restores shields while you are in water, and also affects nearby teammates."},
+  {id:"fire",       name:"Fire",        r:"rare",      v:[1,1,1,1,1], loc:"City/built-up POIs",                                               fx:"Creates a fiery explosion after you have dealt enough damage to enemies."},
+  {id:"earth",      name:"Earth",       r:"rare",      v:[1,1,1,1,0], loc:"Forest/woodland areas",                                            fx:"Gives a chance to find extra rare loot when opening chests."},
+  {id:"duck",       name:"Duck",        r:"epic",      v:[1,1,1,1,0], loc:"Sprite Chests, Duck Vault (Cluster Coast) & Duck Race (Heatwave Harbor)", fx:"Dancing or using Jam Tracks restores shields."},
+  {id:"ghost",      name:"Ghost",       r:"epic",      v:[1,1,1,1,1], loc:"Sprite Chests",                                                    fx:"Reloading your weapon grants temporary invisibility (cloak)."},
+  {id:"demon",      name:"Demon",       r:"epic",      v:[1,1,1,1,0], loc:"Sprite Chests",                                                    fx:"Eliminations restore some health and shields (Siphon effect)."},
+  {id:"king",       name:"King",        r:"epic",      v:[1,1,1,1,1], loc:"Sprite Chests",                                                    fx:"Increases your Pickaxe damage."},
+  {id:"dream",      name:"Dream",       r:"legendary", v:[1,1,1,1,0], loc:"Sprite Chests",                                                    fx:"Gives random loot each level. At max level it explodes into Legendary loot, then resets."},
+  {id:"punk",       name:"Punk",        r:"legendary", v:[1,1,1,1,0], loc:"Sprite Chests",                                                    fx:"No effect until Level 5, then grants unlimited ammo."},
+  {id:"zeropoint",  name:"Zero Point",  r:"mythic",    v:[1,1,1,1,0], loc:"Sprite Chests — rarest of the originals",                         fx:"Using a healing item creates a Shield Bubble Jr. around you."},
+  {id:"burntpeanut",name:"Burnt Peanut",r:"mythic",    v:[1,0,0,0,0], loc:"Sprite Chests",                                                    fx:"Small chance for bonus elimination loot, including Mythic items. Base only - no variants."},
+  {id:"striker",    name:"Striker",     r:"epic",      v:[1,1,1,1,1], loc:"Soccer Pitch POI",                                                 fx:"Gain an Overdrive speed boost after mantling, hurdling, or wall scrambling."},
+  {id:"fishy",      name:"Fishy",       r:"rare",      v:[1,1,1,1,0], loc:"Golden Fishing Spots (fish with a Fishing Rod)",                   fx:"Swim speed way up, plus a brief movement speed boost when you take damage."},
+  {id:"aura",       name:"Aura",        r:"epic",      v:[1,1,1,1,0], loc:"Sprite Chests",                                                    fx:"Earn a Shock Rock charge after dealing enough damage."},
+  {id:"boss",       name:"Boss",        r:"legendary", v:[1,1,1,1,0], loc:"Defeat boss NPCs",                                                 fx:"Increases your maximum Health and Shield."},
+  {id:"grimreaper", name:"Grim Reaper", r:"mythic",    v:[1,1,1,1,0], loc:"Rarest base sprite in the game",                                  fx:"Enemies who damage you become marked, revealing them to you."},
+  {id:"air",        name:"Air",         r:"legendary", v:[1,1,1,1,1], loc:"Sprite Chests",                                                    fx:"Increases sprinting speed and jump height. Also nullifies fall damage."},
+  {id:"batman",     name:"Batman",      r:"mythic",    v:[1,1,1,1,1], loc:"Sprite Chests (DC Hot Bat Summer tie-in)",                        fx:"Grants the ability to launch in the air and deploy the Bat Cape!"},
+  {id:"seven",      name:"Seven",       r:"legendary", v:[1,1,1,1,1], loc:"Sprite Chests",                                                    fx:"Enemy player foot trails are visible in the world for your Squad."},
+  {id:"polo",       name:"Polo",        r:"epic",      v:[1,0,0,0,0], loc:"Sprite Chests",                                                    fx:"Upon earning an elimination, slowly replenish shield for you and nearby squad members for a duration."},
+  {id:"vinijr",     name:"Vini Jr.",    r:"epic",      v:[1,0,0,0,0], loc:"Sprite Chests",                                                    fx:"Sprinting for a short time makes your slide destructive. Slidekicking enemies increases rate of fire and reload speed."}
 ];
 
 var VINFO = [
@@ -339,7 +350,12 @@ var HOLO_IMGS = {
   ghost:   "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Ghost_Holo_L.webp",
   king:    "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_King_Holofoil_ui_L.webp",
   striker: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Soccer_Holofoil_L.webp",
+  air:     "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Air_Holo_L.webp",
+  batman:  "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Holofoil_L.webp",
+  seven:   "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Seven_Holofoil_ui_L.webp",
 };
+var BCOST = {rare:100,   epic:3000, legendary:5000, mythic:7500};
+var VCOST = {rare:4000,  epic:6000, legendary:10000,mythic:15000};
 var RCLS  = {rare:"rr",epic:"re",legendary:"rl",mythic:"rm"};
 var RDOT  = {rare:"#4a90e2",epic:"#a855f7",legendary:"#f59e0b",mythic:"#ef4444"};
 var RLBL  = {rare:"Rare",epic:"Epic",legendary:"Legendary",mythic:"Mythic"};
@@ -662,6 +678,7 @@ function renderInfo(){
       var img=src?'<img src="'+src+'" width="64" height="64" style="object-fit:contain;margin-bottom:5px" alt="'+s.name+'" onerror="this.style.display=\'none\'">':'';
       h+='<div class="icard" onclick="openSheet(\''+s.id+'\')">'+img;
       h+='<div class="iname">'+s.name+'</div><span class="rb '+rc+'">'+rl+'</span>';
+      h+='<div class="icost">'+BCOST[s.r].toLocaleString()+' Dust to summon</div>';
       h+='<div class="ieff">'+eff+'</div><div class="itap">tap for details</div></div>';
     });
     h+='</div>';
@@ -684,6 +701,10 @@ function openSheet(id){
   var baseSrc=IMGS[s.id]?IMGS[s.id][0]:null;
   var bigImg=baseSrc?'<img src="'+baseSrc+'" width="72" height="72" style="object-fit:contain" alt="'+s.name+'" onerror="this.style.display=\'none\'">':'';
   var h='<div class="shdr">'+bigImg+'<div><div class="sname-big">'+s.name+'</div><span class="rb '+rc+'">'+rl+'</span></div></div>';
+  if(s.loc){h+='<div class="ssect">Where to Find</div>';h+='<div class="seff" style="border-left-color:'+bc+'">'+s.loc+'</div>';}
+  var hasVars=s.v.slice(1).some(function(x){return x;});
+  h+='<div class="ssect">Summon Cost</div>';
+  h+='<div class="seff" style="border-left-color:'+bc+'">Base: '+BCOST[s.r].toLocaleString()+' Dust'+(hasVars?'<br>Variants (Gold/Gummy/Galaxy/Holofoil): '+VCOST[s.r].toLocaleString()+' Dust':'')+'</div>';
   h+='<div class="ssect">Ability</div>';
   h+='<div class="seff" style="border-left-color:'+bc+'">'+s.fx+'</div>';
   h+='<div class="ssect">Variant Bonuses</div>';
