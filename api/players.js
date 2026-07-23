@@ -53,7 +53,7 @@ export default async function handler(req, res) {
       const count = await col.countDocuments();
       await col.updateOne(
         { name },
-        { $set: { name, emoji: emoji || '👤' }, $setOnInsert: { order: count } },
+        { $set: { name, emoji: emoji || '👤' }, $setOnInsert: { order: count, createdAt: new Date() } },
         { upsert: true }
       );
       return res.status(200).json({ ok: true });
