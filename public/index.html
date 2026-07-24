@@ -674,7 +674,7 @@ function renderOv(){
       var lv=ownedLevel(p,s.id,vi);
       var cls=lv===2?"hmaster":lv===1?"hyes":"hno";
       var icon=lv===2?"&#11088;":lv===1?"&#10003;":"&#10007;";
-      h+='<td><div class="hcell '+cls+'">'+icon+'</div></td>';
+      h+='<td><div class="hcell '+cls+'" style="width:22px;height:22px;font-size:.65rem">'+icon+'</div></td>';
     });
     var nc=needs.length>0?"var(--red)":"var(--muted)";
     h+='<td style="font-size:.75rem;font-weight:800;color:var(--green)">'+haves.length+'</td>';
