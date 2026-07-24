@@ -146,20 +146,21 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 .vfbtn.ah{border-color:var(--holo);background:rgba(0,229,255,.12);color:var(--text)}
 .vfbtn.ac{border-color:var(--cube);background:rgba(124,58,237,.15);color:var(--text)}
 @media(max-width:500px){
-  .cbtn{width:32px;height:32px}
-  .cbtn img{width:26px;height:26px}
+  .cbtn{width:30px;height:30px;border-radius:7px}
+  .cbtn img{width:24px;height:24px}
   .simg{display:none}
   .pips{display:none}
   .rb{display:none}
-  tbody td{padding:2px 1px}
+  tbody td{padding:2px 0}
   tbody td:first-child{padding-left:4px;min-width:0}
   .info-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
   .vcards{grid-template-columns:1fr}
-  .twrap{padding:0 2px 20px}
-  thead th{font-size:.55rem;padding:4px 1px}
-  thead th:first-child{min-width:60px}
-  .sname{font-size:.72rem}
+  .twrap{padding:0 1px 20px;overflow-x:auto}
+  thead th{font-size:.52rem;padding:4px 0;text-align:center}
+  thead th:first-child{min-width:58px;text-align:left;padding-left:4px}
+  .sname{font-size:.7rem}
   .slabel{gap:4px}
+  table{width:100%;border-collapse:collapse}
 }
 /* home screen */
 .home-screen{position:fixed;inset:0;background:var(--bg);z-index:600;display:flex;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(32px + env(safe-area-inset-top)) 20px calc(32px + env(safe-area-inset-bottom))}
@@ -568,7 +569,7 @@ function updateStats() {
 function renderMy(){
   var h='<div class="twrap"><table>';
   h+='<thead><tr><th>Sprite</th>';
-  h+='<th class="cbase">Base</th><th class="cgold">Gold</th><th class="cgummy">Gummy</th><th class="cgalaxy">Galaxy</th><th class="cholo">Holo</th>';
+  h+='<th class="cbase">Base</th><th class="cgold">Gold</th><th class="cgummy">Gummy</th><th class="cgalaxy">Galaxy</th><th class="cholo">Holo</th><th class="ccube">Cube</th>';
   h+='<th style="color:var(--muted);font-size:.62rem">+</th></tr></thead><tbody>';
   SPRITES.forEach(function(s){
     var ro=0,rt=0;
@@ -577,7 +578,7 @@ function renderMy(){
     var pipH="";
     s.v.forEach(function(a,i){
       if(!a)return;
-      var pc=["pb","pg","pu","px","ph"][i];
+      var pc=["pb","pg","pu","px","ph","pc"][i];
       pipH+='<div class="pip'+(owned(curPlayer,s.id,i)?" "+pc:"")+'"></div>';
     });
     var baseImg = IMGS[s.id] ? IMGS[s.id][0] : null;
@@ -587,7 +588,7 @@ function renderMy(){
     h+='<div style="display:flex;align-items:center;gap:5px"><div class="pips">'+pipH+'</div><span class="rb '+rc+'">'+RLBL[s.r]+'</span></div>';
     h+='</div></div></td>';
     s.v.forEach(function(a,i){
-      if(!a){ h+='<td><button class="cbtn na">&mdash;</button></td>'; return; }
+      if(!a){ h+='<td style="text-align:center;color:rgba(255,255,255,.2);font-size:1rem">—</td>'; return; }
       var lv=ownedLevel(curPlayer,s.id,i);
       var vc=lv>0?VCLS[i]:"";
       var mc=lv===2?" mastered":"";
