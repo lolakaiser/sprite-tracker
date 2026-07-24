@@ -10,7 +10,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap');
 :root{
   --bg:#0d0d1a;--card:#13132b;--card2:#16163a;
-  --accent:#e94560;--gold:#f5c842;--gummy:#ff79c6;--galaxy:#9b59b6;--base:#64b5f6;--holo:#00e5ff;
+  --accent:#e94560;--gold:#f5c842;--gummy:#ff79c6;--galaxy:#9b59b6;--base:#64b5f6;--holo:#00e5ff;--cube:#7c3aed;
   --text:#eef2ff;--muted:#8892b0;--border:rgba(255,255,255,0.07);
   --green:#2ecc71;--red:#e74c3c;
   --rare:#4a90e2;--epic:#a855f7;--legendary:#f59e0b;--mythic:#ef4444;
@@ -58,7 +58,7 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 .sname{font-weight:800;font-size:.82rem;line-height:1.1}
 .pips{display:flex;gap:3px;margin-top:2px}
 .pip{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.1)}
-.pb{background:var(--base)}.pg{background:var(--gold)}.pu{background:var(--gummy)}.px{background:var(--galaxy)}.ph{background:var(--holo)}
+.pb{background:var(--base)}.pg{background:var(--gold)}.pu{background:var(--gummy)}.px{background:var(--galaxy)}.ph{background:var(--holo)}.pc{background:var(--cube)}
 /* check button with sprite image inside */
 .cbtn{width:44px;height:44px;border-radius:10px;border:2px solid rgba(255,255,255,.13);background:rgba(255,255,255,.04);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;-webkit-tap-highlight-color:transparent;user-select:none;padding:0;overflow:hidden;position:relative}
 .cbtn:hover{border-color:rgba(255,255,255,.35)}
@@ -69,7 +69,9 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 .cbtn.ou{border-color:var(--gummy);background:rgba(255,121,198,.15);box-shadow:0 0 10px rgba(255,121,198,.3)}
 .cbtn.ox{border-color:var(--galaxy);background:rgba(155,89,182,.15);box-shadow:0 0 10px rgba(155,89,182,.3)}
 .cbtn.oh{border-color:var(--holo);background:rgba(0,229,255,.1);box-shadow:0 0 10px rgba(0,229,255,.3)}
+.cbtn.oc{border-color:var(--cube);background:rgba(124,58,237,.15);box-shadow:0 0 10px rgba(124,58,237,.3)}
 .cbtn.mastered.oh{box-shadow:0 0 16px rgba(0,229,255,.7)}
+.cbtn.mastered.oc{box-shadow:0 0 16px rgba(124,58,237,.7)}
 .cbtn.mastered.ob{box-shadow:0 0 16px rgba(100,181,246,.7)}
 .cbtn.mastered.og{box-shadow:0 0 16px rgba(245,200,66,.7)}
 .cbtn.mastered.ou{box-shadow:0 0 16px rgba(255,121,198,.7)}
@@ -140,21 +142,22 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e1e42;border:1.5px solid var(--accent);border-radius:12px;padding:10px 20px;font-size:.82rem;font-weight:700;color:var(--text);z-index:500;transition:transform .3s;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .page{display:none}.page.active{display:block}
-.cbase{color:var(--base)!important}.cgold{color:var(--gold)!important}.cgummy{color:var(--gummy)!important}.cgalaxy{color:var(--galaxy)!important}.cholo{color:var(--holo)!important}
+.cbase{color:var(--base)!important}.cgold{color:var(--gold)!important}.cgummy{color:var(--gummy)!important}.cgalaxy{color:var(--galaxy)!important}.cholo{color:var(--holo)!important}.ccube{color:var(--cube)!important}
 .vfbtn.ah{border-color:var(--holo);background:rgba(0,229,255,.12);color:var(--text)}
+.vfbtn.ac{border-color:var(--cube);background:rgba(124,58,237,.15);color:var(--text)}
 @media(max-width:500px){
-  .cbtn{width:38px;height:38px}
-  .cbtn img{width:31px;height:31px}
+  .cbtn{width:32px;height:32px}
+  .cbtn img{width:26px;height:26px}
   .simg{display:none}
   .pips{display:none}
   .rb{display:none}
-  tbody td{padding:3px 1px}
-  tbody td:first-child{padding-left:6px;min-width:0}
+  tbody td{padding:2px 1px}
+  tbody td:first-child{padding-left:4px;min-width:0}
   .info-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
   .vcards{grid-template-columns:1fr}
   .twrap{padding:0 2px 20px}
-  thead th{font-size:.58rem;padding:5px 2px}
-  thead th:first-child{min-width:72px}
+  thead th{font-size:.55rem;padding:4px 1px}
+  thead th:first-child{min-width:60px}
   .sname{font-size:.72rem}
   .slabel{gap:4px}
 }
@@ -235,6 +238,7 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
     <span><span class="ldot" style="background:var(--gummy)"></span>Gummy</span>
     <span><span class="ldot" style="background:var(--galaxy)"></span>Galaxy</span>
     <span><span class="ldot" style="background:var(--holo)"></span>Holo</span>
+    <span><span class="ldot" style="background:var(--cube)"></span>Cube</span>
   </div>
   <div id="my-content"></div>
 </div>
@@ -246,6 +250,7 @@ tbody td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10
     <button class="vfbtn" id="vf2" onclick="setVF(2)">Gummy</button>
     <button class="vfbtn" id="vf3" onclick="setVF(3)">Galaxy</button>
     <button class="vfbtn" id="vf4" onclick="setVF(4)">Holo</button>
+    <button class="vfbtn" id="vf5" onclick="setVF(5)">Cube</button>
   </div>
   <div id="ov-content"></div>
 </div>
@@ -309,7 +314,6 @@ var IMGS = {
   polo:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CompanyStargazer_Default_L.webp",null,null,null],
   vinijr:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CokeParmesan_Default_L.webp",null,null,null],
   cube_batman:    ["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Cube_L.webp",null,null,null],
-  cube_grimreaper:["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Cube_L.webp",null,null,null],
   cube_boss:      ["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_Cube_ui_L.webp",null,null,null],
   cube_earth:     ["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Earth_Cube_ui_L.webp",null,null,null],
   cube_fire:      ["https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Cube_ui_L.webp",null,null,null],
@@ -318,35 +322,27 @@ var IMGS = {
 };
 
 var SPRITES = [
-  {id:"batman",     name:"Batman",      r:"mythic",    v:[1,1,1,1,1], loc:"Sprite Chests (DC Hot Bat Summer tie-in)",                        fx:"Grants the ability to launch in the air and deploy the Bat Cape!"},
-  {id:"cube_batman",     name:"Cube Batman",      r:"mythic",    v:[1,0,0,0,0], loc:"Sprite Chests (DC Hot Bat Summer tie-in)",                                            fx:"Storm Overdrive mobility buff. Also: Grants the ability to launch in the air and deploy the Bat Cape!"},
-  {id:"water",      name:"Water",       r:"rare",      v:[1,1,1,1,1], loc:"Spotted near rivers and beaches",                                        fx:"Restores shields while you are in water, and also affects nearby teammates."},
-  {id:"earth",      name:"Earth",       r:"rare",      v:[1,1,1,1,0], loc:"Found wandering around forests and wooded regions",                                            fx:"Gives a chance to find extra rare loot when opening chests."},
-  {id:"cube_earth",      name:"Cube Earth",       r:"rare",      v:[1,0,0,0,0], loc:"Found wandering around forests and wooded regions",                                  fx:"Storm Overdrive mobility buff. Also: Gives a chance to find extra rare loot when opening chests."},
-  {id:"fire",       name:"Fire",        r:"rare",      v:[1,1,1,1,1], loc:"Located near urban areas",                                               fx:"Creates a fiery explosion after you have dealt enough damage to enemies."},
-  {id:"cube_fire",       name:"Cube Fire",        r:"rare",      v:[1,0,0,0,0], loc:"Located near urban areas",                                                           fx:"Storm Overdrive mobility buff. Also: Creates a fiery explosion after you have dealt enough damage to enemies."},
-  {id:"duck",       name:"Duck",        r:"epic",      v:[1,1,1,1,0], loc:"Found in the vault of a certain business mogul", fx:"Dancing or using Jam Tracks restores shields."},
-  {id:"ghost",      name:"Ghost",       r:"epic",      v:[1,1,1,1,1], loc:"Found in the world at nighttime",                                                    fx:"Reloading your weapon grants temporary invisibility (cloak)."},
-  {id:"dream",      name:"Dream",       r:"legendary", v:[1,1,1,1,0], loc:"Sprite Chests",                                                    fx:"Gives random loot each level. At max level it explodes into Legendary loot, then resets."},
-  {id:"cube_dream",      name:"Cube Dream",       r:"legendary", v:[1,0,0,0,0], loc:"Sprite Chests",                                                                      fx:"Storm Overdrive mobility buff. Also: Gives random loot each level. At max level it explodes into Legendary loot, then resets."},
-  {id:"demon",      name:"Demon",       r:"epic",      v:[1,1,1,1,0], loc:"Sprite Chests",                                                    fx:"Eliminations restore some health and shields (Siphon effect)."},
-  {id:"punk",       name:"Punk",        r:"legendary", v:[1,1,1,1,0], loc:"Sprite Chests",                                                    fx:"No effect until Level 5, then grants unlimited ammo."},
-  {id:"cube_punk",       name:"Cube Punk",        r:"legendary", v:[1,0,0,0,0], loc:"Sprite Chests",                                                                      fx:"Storm Overdrive mobility buff. Also: No effect until Level 5, then grants unlimited ammo."},
-  {id:"king",       name:"King",        r:"epic",      v:[1,1,1,1,1], loc:"Found rarely in Sprite Chests",                                                    fx:"Increases your Pickaxe damage."},
-  {id:"burntpeanut",name:"Burnt Peanut",r:"mythic",    v:[1,0,0,0,0], loc:"Sprite Chests",                                                    fx:"Small chance for bonus elimination loot, including Mythic items. Base only - no variants."},
-  {id:"vinijr",     name:"Vini Jr.",    r:"epic",      v:[1,0,0,0,0], loc:"Sprite Chests",                                                    fx:"Sprinting for a short time makes your slide destructive. Slidekicking enemies increases rate of fire and reload speed."},
-  {id:"zeropoint",  name:"Zero Point",  r:"mythic",    v:[1,1,1,1,0], loc:"Sprite Chests — rarest of the originals",                         fx:"Using a healing item creates a Shield Bubble Jr. around you."},
-  {id:"fishy",      name:"Fishy",       r:"rare",      v:[1,1,1,1,0], loc:"Spotted near high and mountainous areas, and found in and near water while fishing",                   fx:"Swim speed way up, plus a brief movement speed boost when you take damage."},
-  {id:"cube_fishy",      name:"Cube Fishy",       r:"rare",      v:[1,0,0,0,0], loc:"Spotted near high and mountainous areas, and found in and near water while fishing", fx:"Storm Overdrive mobility buff. Also: Swim speed way up, plus a brief movement speed boost when you take damage."},
-  {id:"striker",    name:"Striker",     r:"epic",      v:[1,1,1,1,1], loc:"Soccer Pitch POI",                                                 fx:"Gain an Overdrive speed boost after mantling, hurdling, or wall scrambling."},
-  {id:"aura",       name:"Aura",        r:"epic",      v:[1,1,1,1,0], loc:"Spotted near high and mountainous areas",                                                    fx:"Earn a Shock Rock charge after dealing enough damage."},
-  {id:"boss",       name:"Boss",        r:"legendary", v:[1,1,1,1,0], loc:"Defeat boss NPCs",                                                 fx:"Increases your maximum Health and Shield."},
-  {id:"cube_boss",       name:"Cube Boss",        r:"legendary", v:[1,0,0,0,0], loc:"Defeat boss NPCs",                                                                   fx:"Storm Overdrive mobility buff. Also: Increases your maximum Health and Shield."},
-  {id:"grimreaper", name:"Grim Reaper", r:"mythic",    v:[1,1,1,1,0], loc:"Rarest base sprite in the game",                                  fx:"Enemies who damage you become marked, revealing them to you."},
-  {id:"cube_grimreaper", name:"Cube Grim Reaper", r:"mythic",    v:[1,0,0,0,0], loc:"Rarest base sprite in the game",                                                     fx:"Storm Overdrive mobility buff. Also: Enemies who damage you become marked, revealing them to you."},
-  {id:"air",        name:"Air",         r:"legendary", v:[1,1,1,1,1], loc:"Spotted near high and mountainous areas",                                                    fx:"Increases sprinting speed and jump height. Also nullifies fall damage."},
-  {id:"seven",      name:"Seven",       r:"legendary", v:[1,1,1,1,1], loc:"Spotted near high and mountainous areas",                                                    fx:"Enemy player foot trails are visible in the world for your Squad."},
-  {id:"polo",            name:"Polo",             r:"epic",      v:[1,0,0,0,0], loc:"Sprite Chests",                                                                       fx:"Upon earning an elimination, slowly replenish shield for you and nearby squad members for a duration."}
+  {id:"batman",     name:"Batman",      r:"mythic",    v:[1,1,1,1,1,1], loc:"Sprite Chests (DC Hot Bat Summer tie-in)",                        fx:"Grants the ability to launch in the air and deploy the Bat Cape!"},
+  {id:"water",      name:"Water",       r:"rare",      v:[1,1,1,1,1,0], loc:"Spotted near rivers and beaches",                                        fx:"Restores shields while you are in water, and also affects nearby teammates."},
+  {id:"earth",      name:"Earth",       r:"rare",      v:[1,1,1,1,0,1], loc:"Found wandering around forests and wooded regions",                                            fx:"Gives a chance to find extra rare loot when opening chests."},
+  {id:"fire",       name:"Fire",        r:"rare",      v:[1,1,1,1,1,1], loc:"Located near urban areas",                                               fx:"Creates a fiery explosion after you have dealt enough damage to enemies."},
+  {id:"duck",       name:"Duck",        r:"epic",      v:[1,1,1,1,0,0], loc:"Found in the vault of a certain business mogul", fx:"Dancing or using Jam Tracks restores shields."},
+  {id:"ghost",      name:"Ghost",       r:"epic",      v:[1,1,1,1,1,0], loc:"Found in the world at nighttime",                                                    fx:"Reloading your weapon grants temporary invisibility (cloak)."},
+  {id:"dream",      name:"Dream",       r:"legendary", v:[1,1,1,1,0,1], loc:"Sprite Chests",                                                    fx:"Gives random loot each level. At max level it explodes into Legendary loot, then resets."},
+  {id:"demon",      name:"Demon",       r:"epic",      v:[1,1,1,1,0,0], loc:"Sprite Chests",                                                    fx:"Eliminations restore some health and shields (Siphon effect)."},
+  {id:"punk",       name:"Punk",        r:"legendary", v:[1,1,1,1,0,1], loc:"Sprite Chests",                                                    fx:"No effect until Level 5, then grants unlimited ammo."},
+  {id:"king",       name:"King",        r:"epic",      v:[1,1,1,1,1,0], loc:"Found rarely in Sprite Chests",                                                    fx:"Increases your Pickaxe damage."},
+  {id:"burntpeanut",name:"Burnt Peanut",r:"mythic",    v:[1,0,0,0,0,0], loc:"Sprite Chests",                                                    fx:"Small chance for bonus elimination loot, including Mythic items. Base only - no variants."},
+  {id:"vinijr",     name:"Vini Jr.",    r:"epic",      v:[1,0,0,0,0,0], loc:"Sprite Chests",                                                    fx:"Sprinting for a short time makes your slide destructive. Slidekicking enemies increases rate of fire and reload speed."},
+  {id:"zeropoint",  name:"Zero Point",  r:"mythic",    v:[1,1,1,1,0,0], loc:"Sprite Chests — rarest of the originals",                         fx:"Using a healing item creates a Shield Bubble Jr. around you."},
+  {id:"fishy",      name:"Fishy",       r:"rare",      v:[1,1,1,1,0,1], loc:"Spotted near high and mountainous areas, and found in and near water while fishing",                   fx:"Swim speed way up, plus a brief movement speed boost when you take damage."},
+  {id:"striker",    name:"Striker",     r:"epic",      v:[1,1,1,1,1,0], loc:"Soccer Pitch POI",                                                 fx:"Gain an Overdrive speed boost after mantling, hurdling, or wall scrambling."},
+  {id:"aura",       name:"Aura",        r:"epic",      v:[1,1,1,1,0,0], loc:"Spotted near high and mountainous areas",                                                    fx:"Earn a Shock Rock charge after dealing enough damage."},
+  {id:"boss",       name:"Boss",        r:"legendary", v:[1,1,1,1,0,1], loc:"Defeat boss NPCs",                                                 fx:"Increases your maximum Health and Shield."},
+  {id:"grimreaper", name:"Grim Reaper", r:"mythic",    v:[1,1,1,1,0,1], loc:"Rarest base sprite in the game",                                  fx:"Enemies who damage you become marked, revealing them to you."},
+  {id:"air",        name:"Air",         r:"legendary", v:[1,1,1,1,1,0], loc:"Spotted near high and mountainous areas",                                                    fx:"Increases sprinting speed and jump height. Also nullifies fall damage."},
+  {id:"seven",      name:"Seven",       r:"legendary", v:[1,1,1,1,1,0], loc:"Spotted near high and mountainous areas",                                                    fx:"Enemy player foot trails are visible in the world for your Squad."},
+  {id:"polo",            name:"Polo",             r:"epic",      v:[1,0,0,0,0,0], loc:"Sprite Chests",                                                                       fx:"Upon earning an elimination, slowly replenish shield for you and nearby squad members for a duration."}
 ];
 
 var VINFO = [
@@ -354,11 +350,21 @@ var VINFO = [
   {name:"Gold",     desc:"3x Sprite XP from eliminations.",                     col:"var(--gold)"},
   {name:"Gummy",    desc:"+20% Sprite Dust when extracting the Sprite.",        col:"var(--gummy)"},
   {name:"Galaxy",   desc:"+30% ammo from all ammo pickups.",                    col:"var(--galaxy)"},
-  {name:"Holofoil", desc:"5% chance for your squad to find rare Sprite Variants from looting chests.", col:"var(--holo)"}
+  {name:"Holofoil", desc:"5% chance for your squad to find rare Sprite Variants from looting chests.", col:"var(--holo)"},
+  {name:"Cube",     desc:"Storm Overdrive mobility buff, plus the original Base Sprite ability simultaneously.", col:"var(--cube)"}
 ];
 
-var VCLS  = ["ob","og","ou","ox","oh"];
+var VCLS  = ["ob","og","ou","ox","oh","oc"];
 var VKEYS = ["base","gold","gummy","galaxy","holo"];
+var CUBE_IMGS = {
+  batman:    "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Cube_L.webp",
+  grimreaper:"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Cube_L.webp",
+  boss:      "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_Cube_ui_L.webp",
+  earth:     "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Earth_Cube_ui_L.webp",
+  fire:      "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Cube_ui_L.webp",
+  fishy:     "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fishy_Cube_L.webp",
+  punk:      "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Punk_Cube_ui_L.webp",
+};
 var HOLO_IMGS = {
   water:   "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Water_Holofoil_ui_L.webp",
   fire:    "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Holofoil_ui_L.webp",
@@ -586,7 +592,7 @@ function renderMy(){
       var vc=lv>0?VCLS[i]:"";
       var mc=lv===2?" mastered":"";
       var icon=lv===2?"&#11088;":lv===1?"&#10003;":"";
-      var src=i===4?(HOLO_IMGS[s.id]||null):(IMGS[s.id]?IMGS[s.id][i]:null);
+      var src=i===5?(CUBE_IMGS[s.id]||null):i===4?(HOLO_IMGS[s.id]||null):(IMGS[s.id]?IMGS[s.id][i]:null);
       var imgInner=src?'<img src="'+src+'" alt="" onerror="this.style.display=\'none\'">':'';
       h+='<td><button class="cbtn '+(lv>0?"owned ":"")+vc+mc+'" onclick="toggle(\''+s.id+'\','+i+')">'+imgInner+'<div class="check-overlay">'+icon+'</div></button></td>';
     });
@@ -640,10 +646,10 @@ function renderLeaderboard() {
 
 function setVF(vi){
   curVF=vi;
-  var cls=["ab","ag","au","ax","ah"];
-  [0,1,2,3,4].forEach(function(i){
+  var cls=["ab","ag","au","ax","ah","ac"];
+  [0,1,2,3,4,5].forEach(function(i){
     var b=document.getElementById("vf"+i);
-    b.className="vfbtn"+(i===vi?" "+cls[i]:"");
+    if(b) b.className="vfbtn"+(i===vi?" "+cls[i]:"");
   });
   renderOv();
 }
@@ -660,7 +666,7 @@ function renderOv(){
   vis.forEach(function(s){
     var haves=PLAYERS.filter(function(p){return owned(p,s.id,vi);});
     var needs=PLAYERS.filter(function(p){return !owned(p,s.id,vi);});
-    var src=vi===4?(HOLO_IMGS[s.id]||null):(IMGS[s.id]?IMGS[s.id][vi]:null);
+    var src=vi===5?(CUBE_IMGS[s.id]||null):vi===4?(HOLO_IMGS[s.id]||null):(IMGS[s.id]?IMGS[s.id][vi]:null);
     var img=src?'<img src="'+src+'" style="width:28px;height:28px;object-fit:contain;margin-right:6px;vertical-align:middle" alt="" onerror="this.style.display=\'none\'">':'';
     h+='<tr><td><div class="slabel">'+img+'<span style="font-weight:800;font-size:.82rem">'+s.name+'</span></div></td>';
     PLAYERS.forEach(function(p){
