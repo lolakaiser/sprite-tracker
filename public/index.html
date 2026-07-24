@@ -661,7 +661,7 @@ function renderOv(){
   var vis=SPRITES.filter(function(s){return s.v[vi];});
   var h='<div class="twrap"><table>';
   h+='<thead><tr><th>Sprite &mdash; '+vn+'</th>';
-  PLAYERS.forEach(function(p){ h+='<th style="font-size:.7rem">'+p+'</th>'; });
+  PLAYERS.forEach(function(p){ h+='<th style="font-size:.55rem;letter-spacing:0;max-width:44px;word-break:break-word;line-height:1.2">'+p+'</th>'; });
   h+='<th style="color:var(--muted);font-size:.62rem">Have</th>';
   h+='<th style="color:var(--muted);font-size:.62rem">Need</th></tr></thead><tbody>';
   vis.forEach(function(s){
